@@ -3,14 +3,14 @@ using UnityEngine;
 public class BoatMovement : MonoBehaviour
 {
     [Header("Movement Settings")]
-    public float forwardSpeed = 12f; // Speed for forward/backward (W/S)
-    public float strafeSpeed = 4f;   // Speed for strafing (Q/E)
-    public float turnSpeed = 30f;    // Speed for turning (A/D)
+    public float forwardSpeed ; // Speed for forward/backward (W/S)
+    public float strafeSpeed ;   // Speed for strafing (Q/E)
+    public float turnSpeed ;    // Speed for turning (A/D)
 
     [Header("Physics Settings")]
-    public float slideFactor = 0.5f; // Reduced to allow more natural physics
-    public float momentumDecay = 0.95f; // Adjusted for less damping
-    public float turnDamping = 0.9f;
+    public float slideFactor ; // Reduced to allow more natural physics
+    public float momentumDecay ; // Adjusted for less damping
+    public float turnDamping ;
 
     [Header("References")]
     public Rigidbody boatRigidbody;
@@ -57,7 +57,7 @@ public class BoatMovement : MonoBehaviour
         if (strafeInput != 0) targetVelocity += boatSide * strafeInput * strafeSpeed;
 
         // Apply velocity only when on map or moving intentionally
-        if (transform.position.y > -1f) // Threshold for map, adjust as needed
+        if (transform.position.y > -0.5f) // Threshold for map, adjust as needed
         {
             moveVelocity = Vector3.Lerp(moveVelocity, targetVelocity, slideFactor * Time.fixedDeltaTime);
             boatRigidbody.linearVelocity = Vector3.Lerp(boatRigidbody.linearVelocity, moveVelocity, momentumDecay);
