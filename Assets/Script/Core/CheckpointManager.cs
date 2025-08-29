@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class CheckpointManager : MonoBehaviour
     public GameObject player;
     public string trapTag = "Trap";
     public float fallThreshold = -10f;
+    public float respawnFreezeDuration = 1.5f; // Duration to freeze after respawn
 
     [Header("Checkpoints")]
     public List<Checkpoint> allCheckpoints = new List<Checkpoint>(); // Just references to checkpoint objects
@@ -16,6 +18,7 @@ public class CheckpointManager : MonoBehaviour
 
     private float currentTime;
     private bool isTimerRunning = false;
+    private bool isRespawning = false; // Flag to prevent multiple respawns
 
     private void Awake()
     {
@@ -36,6 +39,9 @@ public class CheckpointManager : MonoBehaviour
 
     private void Update()
     {
+        // Don't update timer or check fall threshold during respawn freeze
+        if (isRespawning) return;
+
         if (isTimerRunning)
         {
             currentTime -= Time.deltaTime;
@@ -60,18 +66,51 @@ public class CheckpointManager : MonoBehaviour
 
     public void RespawnToLastCheckpoint()
     {
-        if (lastCheckpoint == null) return;
+        if (lastCheckpoint == null || isRespawning) return;
 
-        player.transform.position = lastCheckpoint.spawnPoint.position;
-        player.transform.rotation = lastCheckpoint.spawnPoint.rotation;
-
-        currentTime = lastCheckpoint.timeLimit;
-        isTimerRunning = true;
+        StartCoroutine(RespawnCoroutine());
     }
 
     public void ResetToFirstCheckpoint()
     {
-        if (allCheckpoints.Count == 0) return;
+        if (allCheckpoints.Count == 0 || isRespawning) return;
+
+        StartCoroutine(ResetToFirstCoroutine());
+    }
+
+    private IEnumerator RespawnCoroutine()
+    {
+        isRespawning = true;
+
+        // Reset player physics momentum
+        Rigidbody playerRb = player.GetComponent<Rigidbody>();
+        if (playerRb != null)
+        {
+            playerRb.linearVelocity = Vector3.zero;
+            playerRb.angularVelocity = Vector3.zero;
+            playerRb.isKinematic = true; // Freeze physics
+        }
+
+        player.transform.position = lastCheckpoint.spawnPoint.position;
+        player.transform.rotation = lastCheckpoint.spawnPoint.rotation;
+
+        // Wait for freeze duration
+        yield return new WaitForSeconds(respawnFreezeDuration);
+
+        // Re-enable physics
+        if (playerRb != null)
+        {
+            playerRb.isKinematic = false;
+        }
+
+        currentTime = lastCheckpoint.timeLimit;
+        isTimerRunning = true;
+        isRespawning = false;
+    }
+
+    private IEnumerator ResetToFirstCoroutine()
+    {
+        isRespawning = true;
 
         // Show all checkpoints again
         foreach (var cp in allCheckpoints)
@@ -82,13 +121,34 @@ public class CheckpointManager : MonoBehaviour
         // Reset to first checkpoint
         var firstCheckpoint = allCheckpoints[0];
         lastCheckpoint = firstCheckpoint;
+
+        // Reset player physics momentum
+        Rigidbody playerRb = player.GetComponent<Rigidbody>();
+        if (playerRb != null)
+        {
+            playerRb.linearVelocity = Vector3.zero;
+            playerRb.angularVelocity = Vector3.zero;
+            playerRb.isKinematic = true; // Freeze physics
+        }
+
         player.transform.position = firstCheckpoint.spawnPoint.position;
         player.transform.rotation = firstCheckpoint.spawnPoint.rotation;
 
+        // Wait for freeze duration
+        yield return new WaitForSeconds(respawnFreezeDuration);
+
+        // Re-enable physics
+        if (playerRb != null)
+        {
+            playerRb.isKinematic = false;
+        }
+
         currentTime = firstCheckpoint.timeLimit;
         isTimerRunning = true;
+        isRespawning = false;
     }
 
     public float GetCurrentTime() => currentTime;
     public bool IsTimerRunning() => isTimerRunning;
+    public bool IsRespawning() => isRespawning;
 }

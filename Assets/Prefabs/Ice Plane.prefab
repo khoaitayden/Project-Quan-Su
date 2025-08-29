@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3228585621324291456}
   - component: {fileID: 744907870348153394}
   m_Layer: 3
-  m_Name: Ice Cube Plane
+  m_Name: Ice Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
