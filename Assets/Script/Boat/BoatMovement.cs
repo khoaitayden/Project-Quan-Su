@@ -34,19 +34,27 @@ public class BoatMovement : MonoBehaviour
         {
             // Enable gravity and optimize physics
             boatRigidbody.useGravity = true;
-            boatRigidbody.linearDamping = 0.2f;       // No linear drag for pure sliding
-            boatRigidbody.angularDamping = 0.1f;      // No angular damping for pure momentum
-            boatRigidbody.mass = 2f;
         }
     }
 
     void Update()
     {
-        moveInput = -Input.GetAxisRaw("Vertical"); // W = forward, S = backward
-        strafeInput = 0f;
-        if (Input.GetKey(KeyCode.Q)) strafeInput = -1f; // Strafe left
-        if (Input.GetKey(KeyCode.E)) strafeInput = 1f;  // Strafe right
-        turnInput = Input.GetAxisRaw("Horizontal");     // A/D for turning
+        // Get input from InputHandler instead of direct Input calls
+        if (InputHandler.Instance != null)
+        {
+            moveInput = InputHandler.Instance.GetForwardInput(); // W/S
+            strafeInput = InputHandler.Instance.GetStrafeInput(); // Q/E
+            turnInput = InputHandler.Instance.GetTurnInput(); // A/D
+        }
+        else
+        {
+            // Fallback to old input system if InputHandler not found
+            moveInput = -Input.GetAxisRaw("Vertical");
+            strafeInput = 0f;
+            if (Input.GetKey(KeyCode.Q)) strafeInput = -1f;
+            if (Input.GetKey(KeyCode.E)) strafeInput = 1f;
+            turnInput = Input.GetAxisRaw("Horizontal");
+        }
     }
 
     void FixedUpdate()
