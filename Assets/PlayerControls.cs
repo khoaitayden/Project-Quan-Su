@@ -117,6 +117,42 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CameraDistanceUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""fd732713-a6e6-41ca-9d94-ac3941a06062"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CameraDistanceDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""687074ce-ac59-4225-81f1-de1eb3d79c4a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CameraHeightUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""688a7306-2aa9-4cb9-9c8d-d36476b4c139"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CameraHeightDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""4bb2ac11-9847-4ac9-a68b-ff250c03c28d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -240,6 +276,50 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Turn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""489c6e35-a266-458c-8194-3631f918ed10"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraDistanceUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8394fb2c-c971-4d3c-a4a9-5faa80305808"",
+                    ""path"": ""<Keyboard>/h"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraDistanceDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""adb4abf3-be79-412c-8964-2f8aa1eb7f57"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraHeightUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4711e626-81ce-472c-945a-d472892c53ff"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraHeightDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -251,6 +331,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Strafe = m_Player.FindAction("Strafe", throwIfNotFound: true);
         m_Player_Turn = m_Player.FindAction("Turn", throwIfNotFound: true);
+        m_Player_CameraDistanceUp = m_Player.FindAction("CameraDistanceUp", throwIfNotFound: true);
+        m_Player_CameraDistanceDown = m_Player.FindAction("CameraDistanceDown", throwIfNotFound: true);
+        m_Player_CameraHeightUp = m_Player.FindAction("CameraHeightUp", throwIfNotFound: true);
+        m_Player_CameraHeightDown = m_Player.FindAction("CameraHeightDown", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -334,6 +418,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Strafe;
     private readonly InputAction m_Player_Turn;
+    private readonly InputAction m_Player_CameraDistanceUp;
+    private readonly InputAction m_Player_CameraDistanceDown;
+    private readonly InputAction m_Player_CameraHeightUp;
+    private readonly InputAction m_Player_CameraHeightDown;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -357,6 +445,22 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Turn".
         /// </summary>
         public InputAction @Turn => m_Wrapper.m_Player_Turn;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/CameraDistanceUp".
+        /// </summary>
+        public InputAction @CameraDistanceUp => m_Wrapper.m_Player_CameraDistanceUp;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/CameraDistanceDown".
+        /// </summary>
+        public InputAction @CameraDistanceDown => m_Wrapper.m_Player_CameraDistanceDown;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/CameraHeightUp".
+        /// </summary>
+        public InputAction @CameraHeightUp => m_Wrapper.m_Player_CameraHeightUp;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/CameraHeightDown".
+        /// </summary>
+        public InputAction @CameraHeightDown => m_Wrapper.m_Player_CameraHeightDown;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -392,6 +496,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Turn.started += instance.OnTurn;
             @Turn.performed += instance.OnTurn;
             @Turn.canceled += instance.OnTurn;
+            @CameraDistanceUp.started += instance.OnCameraDistanceUp;
+            @CameraDistanceUp.performed += instance.OnCameraDistanceUp;
+            @CameraDistanceUp.canceled += instance.OnCameraDistanceUp;
+            @CameraDistanceDown.started += instance.OnCameraDistanceDown;
+            @CameraDistanceDown.performed += instance.OnCameraDistanceDown;
+            @CameraDistanceDown.canceled += instance.OnCameraDistanceDown;
+            @CameraHeightUp.started += instance.OnCameraHeightUp;
+            @CameraHeightUp.performed += instance.OnCameraHeightUp;
+            @CameraHeightUp.canceled += instance.OnCameraHeightUp;
+            @CameraHeightDown.started += instance.OnCameraHeightDown;
+            @CameraHeightDown.performed += instance.OnCameraHeightDown;
+            @CameraHeightDown.canceled += instance.OnCameraHeightDown;
         }
 
         /// <summary>
@@ -412,6 +528,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Turn.started -= instance.OnTurn;
             @Turn.performed -= instance.OnTurn;
             @Turn.canceled -= instance.OnTurn;
+            @CameraDistanceUp.started -= instance.OnCameraDistanceUp;
+            @CameraDistanceUp.performed -= instance.OnCameraDistanceUp;
+            @CameraDistanceUp.canceled -= instance.OnCameraDistanceUp;
+            @CameraDistanceDown.started -= instance.OnCameraDistanceDown;
+            @CameraDistanceDown.performed -= instance.OnCameraDistanceDown;
+            @CameraDistanceDown.canceled -= instance.OnCameraDistanceDown;
+            @CameraHeightUp.started -= instance.OnCameraHeightUp;
+            @CameraHeightUp.performed -= instance.OnCameraHeightUp;
+            @CameraHeightUp.canceled -= instance.OnCameraHeightUp;
+            @CameraHeightDown.started -= instance.OnCameraHeightDown;
+            @CameraHeightDown.performed -= instance.OnCameraHeightDown;
+            @CameraHeightDown.canceled -= instance.OnCameraHeightDown;
         }
 
         /// <summary>
@@ -473,5 +601,33 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnTurn(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "CameraDistanceUp" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCameraDistanceUp(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "CameraDistanceDown" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCameraDistanceDown(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "CameraHeightUp" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCameraHeightUp(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "CameraHeightDown" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCameraHeightDown(InputAction.CallbackContext context);
     }
 }

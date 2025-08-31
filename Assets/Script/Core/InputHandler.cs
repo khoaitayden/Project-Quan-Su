@@ -12,11 +12,21 @@ public class InputHandler : MonoBehaviour
     private InputAction moveAction;
     private InputAction strafeAction;
     private InputAction turnAction;
+    private InputAction cameraDistanceUpAction;
+    private InputAction cameraDistanceDownAction;
+    private InputAction cameraHeightUpAction;
+    private InputAction cameraHeightDownAction;
 
     // Input Values
     public Vector2 MoveInput { get; private set; } = Vector2.zero;
     public float StrafeInput { get; private set; } = 0f;
     public float TurnInput { get; private set; } = 0f;
+    
+    // Camera Control States
+    public bool CameraDistanceUpPressed { get; private set; } = false;
+    public bool CameraDistanceDownPressed { get; private set; } = false;
+    public bool CameraHeightUpPressed { get; private set; } = false;
+    public bool CameraHeightDownPressed { get; private set; } = false;
 
     private void Awake()
     {
@@ -42,6 +52,10 @@ public class InputHandler : MonoBehaviour
             moveAction = playerInput.actions["Move"];
             strafeAction = playerInput.actions["Strafe"];
             turnAction = playerInput.actions["Turn"];
+            cameraDistanceUpAction = playerInput.actions["CameraDistanceUp"];
+            cameraDistanceDownAction = playerInput.actions["CameraDistanceDown"];
+            cameraHeightUpAction = playerInput.actions["CameraHeightUp"];
+            cameraHeightDownAction = playerInput.actions["CameraHeightDown"];
         }
     }
 
@@ -53,6 +67,12 @@ public class InputHandler : MonoBehaviour
             MoveInput = moveAction.ReadValue<Vector2>();
             StrafeInput = strafeAction.ReadValue<float>();
             TurnInput = turnAction.ReadValue<float>();
+            
+            // Read camera control inputs (check if buttons are currently held)
+            CameraDistanceUpPressed = cameraDistanceUpAction.IsPressed();
+            CameraDistanceDownPressed = cameraDistanceDownAction.IsPressed();
+            CameraHeightUpPressed = cameraHeightUpAction.IsPressed();
+            CameraHeightDownPressed = cameraHeightDownAction.IsPressed();
         }
     }
 
@@ -60,6 +80,12 @@ public class InputHandler : MonoBehaviour
     public float GetForwardInput() => -MoveInput.y; // W/S inverted
     public float GetStrafeInput() => StrafeInput;
     public float GetTurnInput() => TurnInput;
+
+    // Camera control methods - check if buttons are held
+    public bool IsCameraDistanceUpHeld() => CameraDistanceUpPressed;
+    public bool IsCameraDistanceDownHeld() => CameraDistanceDownPressed;
+    public bool IsCameraHeightUpHeld() => CameraHeightUpPressed;
+    public bool IsCameraHeightDownHeld() => CameraHeightDownPressed;
 
     // Alternative method using direct action reading (if needed)
     public Vector2 GetMoveVector()

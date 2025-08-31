@@ -31,6 +31,42 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "CameraDistanceUp",
+                    "type": "Button",
+                    "id": "fd732713-a6e6-41ca-9d94-ac3941a06062",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CameraDistanceDown",
+                    "type": "Button",
+                    "id": "687074ce-ac59-4225-81f1-de1eb3d79c4a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CameraHeightUp",
+                    "type": "Button",
+                    "id": "688a7306-2aa9-4cb9-9c8d-d36476b4c139",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CameraHeightDown",
+                    "type": "Button",
+                    "id": "4bb2ac11-9847-4ac9-a68b-ff250c03c28d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -154,6 +190,50 @@
                     "action": "Turn",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "489c6e35-a266-458c-8194-3631f918ed10",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraDistanceUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8394fb2c-c971-4d3c-a4a9-5faa80305808",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraDistanceDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "adb4abf3-be79-412c-8964-2f8aa1eb7f57",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraHeightUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4711e626-81ce-472c-945a-d472892c53ff",
+                    "path": "<Keyboard>/j",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraHeightDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
