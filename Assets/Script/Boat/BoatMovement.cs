@@ -34,6 +34,7 @@ public class BoatMovement : MonoBehaviour
         {
             // Enable gravity and optimize physics
             boatRigidbody.useGravity = true;
+            boatRigidbody.isKinematic = false; // Ensure it starts as non-kinematic
         }
     }
 
@@ -60,6 +61,9 @@ public class BoatMovement : MonoBehaviour
     void FixedUpdate()
     {
         if (boatRigidbody == null) return;
+
+        // Skip movement logic if Rigidbody is kinematic (during respawn)
+        if (boatRigidbody.isKinematic) return;
 
         bool isAboveGroundThreshold = transform.position.y > groundThreshold;
         bool isTouchingGround = IsTouchingGround();
@@ -159,7 +163,12 @@ public class BoatMovement : MonoBehaviour
         // Reset turning momentum on respawn
         currentTurnVelocity = 0f;
         targetTurnVelocity = 0f;
-        boatRigidbody.angularVelocity = Vector3.zero;
+        
+        // Only reset angular velocity if not kinematic
+        if (boatRigidbody != null && !boatRigidbody.isKinematic)
+        {
+            boatRigidbody.angularVelocity = Vector3.zero;
+        }
 
         // Check if CheckpointManager exists and has a valid checkpoint
         if (CheckpointManager.Instance != null)

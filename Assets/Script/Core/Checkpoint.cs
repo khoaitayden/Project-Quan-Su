@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
@@ -6,11 +7,17 @@ public class Checkpoint : MonoBehaviour
     public Transform spawnPoint;
     public float timeLimit = 30f;
 
+    [Header("Associated Spawners")]
+    public List<BallSpawner> associatedSpawners = new List<BallSpawner>();
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            CheckpointManager.Instance.SetCheckpoint(this);
+            if (CheckpointManager.Instance != null)
+            {
+                CheckpointManager.Instance.SetCheckpoint(this);
+            }
         }
     }
 

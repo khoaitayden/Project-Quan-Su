@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Ice Surface
+  m_Name: Lava Ball
   m_Shader: {fileID: 4800000, guid: a7c663b7f539382478629ef1c004ba3c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -32,7 +32,6 @@ Material:
   - BOOLEAN_8FFC86E3829C4EDC803214888AFF1D54_ON
   - BOOLEAN_DA86705C04FD4AC4BCD8E981DF6EF480_ON
   - BOOLEAN_F3D0CF71807843B1AEC5A3E6B039F1D0_ON
-  - _USE_HDR_REFLECTION
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -140,7 +139,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _InsideFG_Tex:
-        m_Texture: {fileID: 2800000, guid: d80137f2bea5e4821a7308aabd782ae6, type: 3}
+        m_Texture: {fileID: 2800000, guid: a6ad211cf7abb422a91eddf2b497c8d6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MS:
@@ -164,7 +163,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ReflectionCube:
-        m_Texture: {fileID: 8900000, guid: c9bc6cdb7a2e78b4c85ae74715b0a355, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Refraction_Second_Tex:
@@ -294,8 +293,8 @@ Material:
     - Vector1_fe56c97684ff456fa23df48b30b4ecf3: 1
     - Vector1_fe6a3144604f4341bd8d0d1a3d5b8e79: 0.75
     - _AO_UV_Channel: 0
-    - _BumpScale: 0.29
-    - _CustomShadowStrength: 0.2
+    - _BumpScale: 0
+    - _CustomShadowStrength: 1
     - _Desaturate_Amount: 0.75
     - _Desaturate_Fresnel_Exp: 1
     - _Desaturate_Fresnel_Exp_2: 2
@@ -307,12 +306,12 @@ Material:
     - _Final_Power: 4
     - _Float: 0.5
     - _Float_1: 0
-    - _FresnelBias: 0
-    - _FresnelPower: 7.02
+    - _FresnelBias: -0.13
+    - _FresnelPower: 0.94
     - _FresnelScale: 1
     - _InsideBG_DissortStrength: 1
     - _InsideBG_MaskPower: 1
-    - _InsideBG_Power: 0.1
+    - _InsideBG_Power: 10
     - _InsideCloudA_DissortNoise_Strength: 0.468
     - _InsideCloudA_DissortNoise_Tiling: 0
     - _InsideCloudA_Dissort_Strength: 0.273
@@ -355,15 +354,15 @@ Material:
     - _QueueOffset: 0
     - _RST_UV_Scale: 4
     - _Ramp_Exp: 2
-    - _ReflectionBlur: 0
-    - _ReflectionStrength: 0.42
+    - _ReflectionBlur: 3
+    - _ReflectionStrength: 0.2
     - _Refraction_Second_Tex_Str: 1
     - _Roughness: 0
     - _SR2p: 10.92
     - _Scale: 1
     - _Screen_Distortion: 0.91
     - _Smoothness: 1
-    - _SpecularIntensity: 2.8
+    - _SpecularIntensity: 10
     - _SpecularSmoothness: 1
     - _Step_Length: 1
     - _SurfaceNormalStrength: 1
@@ -382,7 +381,7 @@ Material:
     - _TransmissionDissortStrength: 0.5
     - _TransmissionStrength: 0
     - _UseAOMap: 0
-    - _UseHDRReflection: 1
+    - _UseHDRReflection: 0
     - _Use_SDF: 0
     - _World_Or_Local: 0
     - _de: 1
@@ -406,8 +405,8 @@ Material:
     - Vector3_fbc5f9755ff2453eb76ef6ca79649b63: {r: 0, g: 0, b: 0, a: 0}
     - Vector3_fhc5f9755ff2453eb76ef6ca79649b63: {r: 1, g: 1, b: 1, a: 0}
     - _BaseColor: {r: 0.26226407, g: 0.51950103, b: 1, a: 1}
-    - _InsideBG_ColorA: {r: 0.059273697, g: 0.18688394, b: 0.4188679, a: 0}
-    - _InsideBG_ColorB: {r: 0.03254215, g: 0, b: 0.2905661, a: 0}
+    - _InsideBG_ColorA: {r: 0, g: 0, b: 0, a: 0}
+    - _InsideBG_ColorB: {r: 1, g: 0.90196085, b: 0, a: 0}
     - _InsideCloudA_CenterOffsetOffset: {r: 0, g: 0, b: 0, a: 0}
     - _InsideCloudA_Color: {r: 0.069687, g: 0.7874675, b: 2.4622889, a: 0}
     - _InsideCloudA_DissortNoise_ScrollSpeed: {r: 0, g: 1, b: 0, a: 0}
@@ -420,10 +419,10 @@ Material:
     - _InsideCloudC_ColorA: {r: 0.011224491, g: 0.01632653, b: 0.05, a: 0}
     - _InsideCloudC_ColorB: {r: 0, g: 1.6381608, b: 3.0952597, a: 0}
     - _InsideCloudC_RotationAxis: {r: 1, g: 1, b: 1, a: 0}
-    - _InsideFG_Color: {r: 0.8519844, g: 0.8283019, b: 1, a: 0}
+    - _InsideFG_Color: {r: 2.2795873, g: 0, b: 0, a: 0}
     - _InsideFG_ScrollSpeed: {r: 0, g: 0, b: 0, a: 0}
     - _Ramp_Color_Tint: {r: 1, g: 1, b: 1, a: 1}
-    - _ReflectionColor: {r: 0.010615835, g: 0.3160271, b: 0.8037735, a: 1}
+    - _ReflectionColor: {r: 0.09433961, g: 0, b: 0, a: 1}
     - _SpecularColor: {r: 0, g: 0, b: 0, a: 1}
     - _Specular_Color: {r: 0.1981132, g: 0.1981132, b: 0.1981132, a: 1}
     - _TransmissionColor: {r: 0, g: 0.38142967, b: 1, a: 0}

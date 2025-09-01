@@ -6,19 +6,24 @@ public class CheckpointManager : MonoBehaviour
 {
     public static CheckpointManager Instance;
 
+    // Event for checkpoint changes
+    public static System.Action<Checkpoint> OnCheckpointChanged;
+
     [Header("Player Settings")]
     public GameObject player;
     public string trapTag = "Trap";
     public float fallThreshold = -10f;
-    public float respawnFreezeDuration = 1.5f; // Duration to freeze after respawn
 
     [Header("Checkpoints")]
-    public List<Checkpoint> allCheckpoints = new List<Checkpoint>(); // Just references to checkpoint objects
+    public List<Checkpoint> allCheckpoints = new List<Checkpoint>();
     private Checkpoint lastCheckpoint;
+
+    [Header("Spawners")]
+    public List<BallSpawner> allSpawners = new List<BallSpawner>(); // All spawners in scene
 
     private float currentTime;
     private bool isTimerRunning = false;
-    private bool isRespawning = false; // Flag to prevent multiple respawns
+    private bool isRespawning = false;
 
     private void Awake()
     {
@@ -32,14 +37,12 @@ public class CheckpointManager : MonoBehaviour
     {
         if (allCheckpoints.Count > 0)
         {
-            // Start at first checkpoint
             SetCheckpoint(allCheckpoints[0]);
         }
     }
 
     private void Update()
     {
-        // Don't update timer or check fall threshold during respawn freeze
         if (isRespawning) return;
 
         if (isTimerRunning)
@@ -49,32 +52,54 @@ public class CheckpointManager : MonoBehaviour
                 RespawnToLastCheckpoint();
         }
 
-        // Fall off map check
         if (player.transform.position.y < fallThreshold)
             RespawnToLastCheckpoint();
     }
 
     public void SetCheckpoint(Checkpoint checkpoint)
     {
+        Checkpoint previousCheckpoint = lastCheckpoint;
         lastCheckpoint = checkpoint;
         currentTime = checkpoint.timeLimit;
         isTimerRunning = true;
 
-        // Hide the checkpoint visually
         checkpoint.gameObject.SetActive(false);
+        
+        // Notify listeners that checkpoint changed
+        if (OnCheckpointChanged != null && previousCheckpoint != checkpoint)
+        {
+            OnCheckpointChanged(checkpoint);
+        }
+        
+        // Handle spawner activation based on checkpoint
+        HandleSpawnerActivation(checkpoint);
+    }
+
+    private void HandleSpawnerActivation(Checkpoint activeCheckpoint)
+    {
+        // Stop all spawners first
+        foreach (var spawner in allSpawners)
+        {
+            // Note: Individual spawners now handle their own activation based on events
+            // This is kept for backward compatibility
+        }
+    }
+
+    // Called by TrapDetector when player hits a trap
+    public void OnPlayerTrapTrigger()
+    {
+        RespawnToLastCheckpoint();
     }
 
     public void RespawnToLastCheckpoint()
     {
         if (lastCheckpoint == null || isRespawning) return;
-
         StartCoroutine(RespawnCoroutine());
     }
 
     public void ResetToFirstCheckpoint()
     {
         if (allCheckpoints.Count == 0 || isRespawning) return;
-
         StartCoroutine(ResetToFirstCoroutine());
     }
 
@@ -82,22 +107,19 @@ public class CheckpointManager : MonoBehaviour
     {
         isRespawning = true;
 
-        // Reset player physics momentum
         Rigidbody playerRb = player.GetComponent<Rigidbody>();
         if (playerRb != null)
         {
             playerRb.linearVelocity = Vector3.zero;
             playerRb.angularVelocity = Vector3.zero;
-            playerRb.isKinematic = true; // Freeze physics
+            playerRb.isKinematic = true;
         }
 
         player.transform.position = lastCheckpoint.spawnPoint.position;
         player.transform.rotation = lastCheckpoint.spawnPoint.rotation;
 
-        // Wait for freeze duration
-        yield return new WaitForSeconds(respawnFreezeDuration);
+        yield return new WaitForSeconds(1.5f);
 
-        // Re-enable physics
         if (playerRb != null)
         {
             playerRb.isKinematic = false;
@@ -106,38 +128,39 @@ public class CheckpointManager : MonoBehaviour
         currentTime = lastCheckpoint.timeLimit;
         isTimerRunning = true;
         isRespawning = false;
+        
+        // Notify that we're back at checkpoint (in case spawners need to restart)
+        if (OnCheckpointChanged != null)
+        {
+            OnCheckpointChanged(lastCheckpoint);
+        }
     }
 
     private IEnumerator ResetToFirstCoroutine()
     {
         isRespawning = true;
 
-        // Show all checkpoints again
         foreach (var cp in allCheckpoints)
         {
             cp.gameObject.SetActive(true);
         }
 
-        // Reset to first checkpoint
         var firstCheckpoint = allCheckpoints[0];
         lastCheckpoint = firstCheckpoint;
 
-        // Reset player physics momentum
         Rigidbody playerRb = player.GetComponent<Rigidbody>();
         if (playerRb != null)
         {
             playerRb.linearVelocity = Vector3.zero;
             playerRb.angularVelocity = Vector3.zero;
-            playerRb.isKinematic = true; // Freeze physics
+            playerRb.isKinematic = true;
         }
 
         player.transform.position = firstCheckpoint.spawnPoint.position;
         player.transform.rotation = firstCheckpoint.spawnPoint.rotation;
 
-        // Wait for freeze duration
-        yield return new WaitForSeconds(respawnFreezeDuration);
+        yield return new WaitForSeconds(1.5f);
 
-        // Re-enable physics
         if (playerRb != null)
         {
             playerRb.isKinematic = false;
@@ -146,9 +169,16 @@ public class CheckpointManager : MonoBehaviour
         currentTime = firstCheckpoint.timeLimit;
         isTimerRunning = true;
         isRespawning = false;
+        
+        // Notify that we're back at first checkpoint
+        if (OnCheckpointChanged != null)
+        {
+            OnCheckpointChanged(firstCheckpoint);
+        }
     }
 
     public float GetCurrentTime() => currentTime;
     public bool IsTimerRunning() => isTimerRunning;
     public bool IsRespawning() => isRespawning;
+    public Checkpoint GetCurrentCheckpoint() => lastCheckpoint;
 }

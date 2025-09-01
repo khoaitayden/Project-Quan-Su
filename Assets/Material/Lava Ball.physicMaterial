@@ -6,10 +6,10 @@ PhysicsMaterial:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Obstacle
+  m_Name: Lava Ball
   serializedVersion: 2
-  m_DynamicFriction: 100
-  m_StaticFriction: 100
-  m_Bounciness: 1
-  m_FrictionCombine: 1
-  m_BounceCombine: 3
+  m_DynamicFriction: 0
+  m_StaticFriction: 0
+  m_Bounciness: 0.5
+  m_FrictionCombine: 0
+  m_BounceCombine: 0
