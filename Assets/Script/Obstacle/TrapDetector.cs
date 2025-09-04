@@ -28,7 +28,8 @@ public class TrapDetector : MonoBehaviour
     {
         if (CheckpointManager.Instance != null)
         {
-            CheckpointManager.Instance.OnPlayerTrapTrigger();
+            // FIX: Changed OnPlayerTrapTrigger() to the correct method RespawnToLastCheckpoint()
+            CheckpointManager.Instance.RespawnToLastCheckpoint();
         }
     }
 

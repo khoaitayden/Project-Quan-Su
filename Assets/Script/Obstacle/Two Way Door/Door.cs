@@ -1,10 +1,13 @@
 using UnityEngine;
+using System;
 
 public class Door : MonoBehaviour
 {
     public bool isCorrect = false;
-    public bool isLeftDoor = false;
-    public DoorManager.DoorPair doorPair; // Reference to parent door pair
+
+    // Events for other scripts to subscribe to
+    public event Action<Door> OnPlayerEnteredCorrect;
+    public event Action<Door> OnPlayerEnteredIncorrect;
 
     void OnTriggerEnter(Collider other)
     {
@@ -12,24 +15,15 @@ public class Door : MonoBehaviour
         {
             if (isCorrect)
             {
-                Debug.Log("Correct door chosen - passing through! Door: " + (isLeftDoor ? "Left" : "Right"));
-                // Correct door - player passes through, hide door
-                if (doorPair != null)
-                {
-                    DoorManager doorManager = FindObjectOfType<DoorManager>();
-                    if (doorManager != null)
-                    {
-                        doorManager.OnDoorAnswered(doorPair);
-                    }
-                }
+                Debug.Log("Correct door chosen!");
+                // Invoke the event for subscribers to handle.
+                OnPlayerEnteredCorrect?.Invoke(this); 
             }
             else
             {
-                Debug.Log("Wrong door chosen - respawning! Door: " + (isLeftDoor ? "Left" : "Right"));
-                if (CheckpointManager.Instance != null)
-                {
-                    CheckpointManager.Instance.OnPlayerTrapTrigger();
-                }
+                Debug.Log("Wrong door chosen!");
+                // Invoke the event for subscribers to handle.
+                OnPlayerEnteredIncorrect?.Invoke(this); 
             }
         }
     }
