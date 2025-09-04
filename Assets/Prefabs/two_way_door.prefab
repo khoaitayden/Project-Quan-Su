@@ -122,10 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isCorrect: 0
-  optionText: 
-  doorManager: {fileID: 0}
   isLeftDoor: 1
-  hasBeenTriggered: 0
 --- !u!1 &6253575147539226864
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,10 +245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isCorrect: 0
-  optionText: 
-  doorManager: {fileID: 0}
   isLeftDoor: 0
-  hasBeenTriggered: 0
 --- !u!1001 &4684216014745323912
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -286,11 +280,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d2fd24efffb1274479ee766fbc784f26, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.99521035
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d2fd24efffb1274479ee766fbc784f26, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0.09775662
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d2fd24efffb1274479ee766fbc784f26, type: 3}
       propertyPath: m_LocalRotation.y
@@ -302,7 +296,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d2fd24efffb1274479ee766fbc784f26, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -11.22
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d2fd24efffb1274479ee766fbc784f26, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y

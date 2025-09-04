@@ -280,9 +280,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3611511f59dbcee4291c26a50a2e1da5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doorFramePrefab: {fileID: 5602693940522939609, guid: 70e9f5f007fd1084ea231af7315ddf9d, type: 3}
-  leftDoor: {fileID: 0}
-  rightDoor: {fileID: 0}
   tutorialQuestionBank: {fileID: 11400000, guid: 66d84b3bfe0c3c64c85bc5728e759cd6, type: 2}
 --- !u!4 &43568440 stripped
 Transform:
@@ -3227,6 +3224,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db8020b8637816949b2b4b2213967233, type: 3}
+--- !u!1 &105155968
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 105155969}
+  m_Layer: 0
+  m_Name: StartOfTheSlope
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &105155969
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105155968}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -80, y: 36.8, z: 2073.15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &127224922
 GameObject:
   m_ObjectHideFlags: 0
@@ -12012,11 +12040,23 @@ PrefabInstance:
       value: CheckPoint LV4
       objectReference: {fileID: 0}
     - target: {fileID: 3788502013240300760, guid: 4f984ac40eef5ac42860b485d5641426, type: 3}
+      propertyPath: doorManager
+      value: 
+      objectReference: {fileID: 1660383537}
+    - target: {fileID: 3788502013240300760, guid: 4f984ac40eef5ac42860b485d5641426, type: 3}
       propertyPath: tutorialDoor
       value: 
       objectReference: {fileID: 43568436}
     - target: {fileID: 3788502013240300760, guid: 4f984ac40eef5ac42860b485d5641426, type: 3}
+      propertyPath: slopeDoorChain
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3788502013240300760, guid: 4f984ac40eef5ac42860b485d5641426, type: 3}
       propertyPath: isTutorialCheckpoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3788502013240300760, guid: 4f984ac40eef5ac42860b485d5641426, type: 3}
+      propertyPath: isSlopeStartCheckpoint
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3788502013240300760, guid: 4f984ac40eef5ac42860b485d5641426, type: 3}
@@ -33439,6 +33479,14 @@ PrefabInstance:
     - target: {fileID: 6394865144463182165, guid: 70e9f5f007fd1084ea231af7315ddf9d, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7590594636024080273, guid: 70e9f5f007fd1084ea231af7315ddf9d, type: 3}
+      propertyPath: m_Convex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7590594636024080273, guid: 70e9f5f007fd1084ea231af7315ddf9d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -84158,13 +84206,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorFramePrefab: {fileID: 5602693940522939609, guid: 70e9f5f007fd1084ea231af7315ddf9d, type: 3}
+  questionBank: {fileID: 11400000, guid: 66d84b3bfe0c3c64c85bc5728e759cd6, type: 2}
+  slopeStart: {fileID: 105155969}
+  slopeEnd: {fileID: 1754671243}
+  doorSpacing: 50
+  movementSpeed: 10
+  raycastDistance: 10
   startCheckpoints:
   - {fileID: 742477876}
   endCheckpoints:
   - {fileID: 151730682}
-  spawnInterval: 15
-  maxDoors: 15
-  questionBank: {fileID: 11400000, guid: 66d84b3bfe0c3c64c85bc5728e759cd6, type: 2}
 --- !u!4 &1660383538
 Transform:
   m_ObjectHideFlags: 0
@@ -86201,6 +86252,37 @@ Transform:
   - {fileID: 2003892716}
   - {fileID: 34037279}
   - {fileID: 255595486}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1754671242
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1754671243}
+  m_Layer: 0
+  m_Name: EndOfTheSlope
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1754671243
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754671242}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -80, y: 161.14, z: 1446.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1772551473
@@ -90513,3 +90595,5 @@ SceneRoots:
   - {fileID: 2074865403}
   - {fileID: 1736924697}
   - {fileID: 617908311}
+  - {fileID: 1754671243}
+  - {fileID: 105155969}

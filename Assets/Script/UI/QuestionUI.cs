@@ -41,12 +41,12 @@ public class QuestionUI : MonoBehaviour
 
     void Update()
     {
-        CheckForNearbyDoors();
+        CheckForNearbyQuestions();
     }
 
-    void CheckForNearbyDoors()
+    void CheckForNearbyQuestions()
     {
-        // Check for regular door managers first
+        // Check for door managers first
         DoorManager[] doorManagers = FindObjectsOfType<DoorManager>();
         DoorManager nearestManager = null;
         float nearestDistance = Mathf.Infinity;
@@ -61,7 +61,7 @@ public class QuestionUI : MonoBehaviour
             }
         }
 
-        // If no regular door manager found, check for tutorial doors
+        // If no door manager found, check for tutorial doors
         if (nearestManager == null)
         {
             TutorialDoor[] tutorialDoors = FindObjectsOfType<TutorialDoor>();
@@ -93,23 +93,23 @@ public class QuestionUI : MonoBehaviour
         {
             currentDoorManager = nearestManager;
             currentTutorialDoor = null;
-            ShowQuestion();
+            ShowDoorManagerQuestion();
         }
-        else if (nearestManager == null && isShowingQuestion)
+        else if (nearestManager == null && isShowingQuestion && currentTutorialDoor == null)
         {
             HideQuestion();
         }
     }
 
-    public void ShowQuestion()
+    public void ShowDoorManagerQuestion()
     {
-        if (currentDoorManager == null || uiPanel == null) return;
+        if (uiPanel == null) return;
 
-        // For regular doors, show generic question
+        // For door managers, show generic question message
         if (questionText != null)
-            questionText.text = "Choose the correct door to proceed";
+            questionText.text = "Answer the question to proceed";
 
-        // Randomly assign options to left/right
+        // Randomly assign options to left/right for variety
         bool option1IsLeft = Random.Range(0, 2) == 0;
 
         if (leftOptionText != null)
@@ -127,12 +127,14 @@ public class QuestionUI : MonoBehaviour
 
     public void ShowTutorialQuestion()
     {
+        if (currentTutorialDoor == null || uiPanel == null) return;
+
         // Tutorial questions are handled by TutorialDoor.ActivateTutorial()
-        // This method is called when we want to show that we're near a tutorial door
-        if (uiPanel != null && currentTutorialDoor != null)
+        if (QuestionUI.Instance != null)
         {
-            // The actual question text is set by TutorialDoor.ActivateTutorial()
-            // Just make sure UI is ready
+            if (instructionText != null)
+                instructionText.text = "Choose the correct door to continue";
+            
             uiPanel.SetActive(true);
             isShowingQuestion = true;
         }

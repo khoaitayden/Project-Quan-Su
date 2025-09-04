@@ -5,8 +5,14 @@ public class Checkpoint : MonoBehaviour
     [Header("Checkpoint Settings")]
     public Transform spawnPoint;
     public float timeLimit = 30f;
-    public TutorialDoor tutorialDoor; // Assign in inspector
+    
+    [Header("Tutorial Settings")]
+    public TutorialDoor tutorialDoor;
     public bool isTutorialCheckpoint = false;
+    
+    [Header("Slope Door Settings")]
+    public DoorManager doorManager; // Changed from SlopeDoorChain to DoorManager
+    public bool isSlopeStartCheckpoint = false;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -20,6 +26,12 @@ public class Checkpoint : MonoBehaviour
                 if (isTutorialCheckpoint && tutorialDoor != null)
                 {
                     tutorialDoor.ActivateTutorial();
+                }
+                
+                // Start slope door chain if this is slope start checkpoint
+                if (isSlopeStartCheckpoint && doorManager != null)
+                {
+                    doorManager.StartChain();
                 }
             }
         }

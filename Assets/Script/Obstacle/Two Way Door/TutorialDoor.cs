@@ -49,11 +49,6 @@ public class TutorialDoor : MonoBehaviour
         leftDoor.isLeftDoor = true;
         rightDoor.isCorrect = !leftIsCorrect;
         rightDoor.isLeftDoor = false;
-        
-        Debug.Log("Question: " + question.questionText);
-        Debug.Log("Option1: " + question.option1 + " (Correct: " + question.correctAnswer + ")");
-        Debug.Log("Option2: " + question.option2 + " (Correct: " + !question.correctAnswer + ")");
-        Debug.Log("Left door correct: " + leftIsCorrect + ", Right door correct: " + !leftIsCorrect);
     }
 
     public void ActivateTutorial()
@@ -78,6 +73,15 @@ public class TutorialDoor : MonoBehaviour
             
             if (QuestionUI.Instance.uiPanel != null)
                 QuestionUI.Instance.uiPanel.SetActive(true);
+        }
+    }
+    
+    // Call this when player answers correctly to hide UI
+    public void OnTutorialCompleted()
+    {
+        if (QuestionUI.Instance != null)
+        {
+            QuestionUI.Instance.HideQuestion();
         }
     }
 }

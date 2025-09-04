@@ -17,3 +17,15 @@ MonoBehaviour:
     option1: 2
     option2: 3
     correctAnswer: 1
+  - questionText: 1+2
+    option1: 2
+    option2: 3
+    correctAnswer: 1
+  - questionText: 1+3
+    option1: 2
+    option2: 4
+    correctAnswer: 0
+  - questionText: 1+10
+    option1: 6
+    option2: 11
+    correctAnswer: 1

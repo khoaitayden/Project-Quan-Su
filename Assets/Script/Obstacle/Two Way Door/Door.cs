@@ -4,6 +4,7 @@ public class Door : MonoBehaviour
 {
     public bool isCorrect = false;
     public bool isLeftDoor = false;
+    public DoorManager.DoorPair doorPair; // Reference to parent door pair
 
     void OnTriggerEnter(Collider other)
     {
@@ -12,7 +13,15 @@ public class Door : MonoBehaviour
             if (isCorrect)
             {
                 Debug.Log("Correct door chosen - passing through! Door: " + (isLeftDoor ? "Left" : "Right"));
-                // Do nothing - let player pass through
+                // Correct door - player passes through, hide door
+                if (doorPair != null)
+                {
+                    DoorManager doorManager = FindObjectOfType<DoorManager>();
+                    if (doorManager != null)
+                    {
+                        doorManager.OnDoorAnswered(doorPair);
+                    }
+                }
             }
             else
             {
