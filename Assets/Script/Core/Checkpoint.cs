@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
@@ -6,9 +5,8 @@ public class Checkpoint : MonoBehaviour
     [Header("Checkpoint Settings")]
     public Transform spawnPoint;
     public float timeLimit = 30f;
-
-    [Header("Associated Spawners")]
-    public List<BallSpawner> associatedSpawners = new List<BallSpawner>();
+    public TutorialDoor tutorialDoor; // Assign in inspector
+    public bool isTutorialCheckpoint = false;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -17,6 +15,12 @@ public class Checkpoint : MonoBehaviour
             if (CheckpointManager.Instance != null)
             {
                 CheckpointManager.Instance.SetCheckpoint(this);
+                
+                // Activate tutorial door if this is tutorial checkpoint
+                if (isTutorialCheckpoint && tutorialDoor != null)
+                {
+                    tutorialDoor.ActivateTutorial();
+                }
             }
         }
     }
