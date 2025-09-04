@@ -27,15 +27,7 @@ public class BoatMovement : MonoBehaviour
 
     void Start()
     {
-        if (boatRigidbody == null)
             boatRigidbody = GetComponent<Rigidbody>();
-
-        if (boatRigidbody != null)
-        {
-            // Enable gravity and optimize physics
-            boatRigidbody.useGravity = true;
-            boatRigidbody.isKinematic = false; // Ensure it starts as non-kinematic
-        }
     }
 
     void Update()
